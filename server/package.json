@@ -2,7 +2,6 @@
   "name": "sml-lsp-server",
   "version": "1.0.0",
   "description": "Standard ML Language Server",
-  "author": "rom6621",
   "engines": {
     "node": "*"
   },

@@ -2,7 +2,6 @@
   "name": "sml-lsp",
   "version": "1.0.0",
   "description": "Language Server for Standard ML",
-  "author": "rom6621",
   "engines": {
     "vscode": "^1.63.0"
   },
