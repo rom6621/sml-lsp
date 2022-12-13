@@ -480,7 +480,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  18
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   50
+#define YYLAST   48
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  16
@@ -489,7 +489,7 @@ union yyalloc
 /* YYNRULES -- Number of rules.  */
 #define YYNRULES  24
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  44
+#define YYNSTATES  42
 
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   267
@@ -539,7 +539,7 @@ static const yytype_uint8 yyrline[] =
 {
        0,    33,    33,    41,    49,    60,    68,    79,    87,    95,
      102,   110,   118,   126,   133,   142,   150,   162,   171,   178,
-     186,   196,   205,   214,   223
+     186,   196,   204,   213,   222
 };
 #endif
 
@@ -578,11 +578,11 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      34,    -7,    -7,    -7,    12,     7,    22,    11,    15,    34,
-      -7,    -7,     4,    19,     8,     6,    -7,    16,    -7,    -7,
-      15,    41,    -7,     0,     5,    -7,    34,    34,    -7,    -7,
-      34,    28,    -7,    -1,     3,    15,    15,    34,    -7,    34,
-      -7,    -7,    15,    15
+      35,    -7,    -7,    -7,    12,     7,    23,    11,    16,    35,
+      -7,    -7,     4,    15,     8,    10,    -7,    17,    -7,    -7,
+      16,    34,    -7,     0,     5,    -7,    35,    35,    -7,    -7,
+      35,    -7,    -7,    -1,     3,    16,    16,    -7,    35,    -7,
+      -7,    16
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -593,14 +593,14 @@ static const yytype_int8 yydefact[] =
        0,     7,     8,     9,     0,     0,     0,     0,     2,     3,
        5,    22,     0,     0,     0,     0,    13,    12,     1,    11,
        0,     5,    18,     0,     0,    15,     0,     0,    10,    19,
-       0,     0,    24,     0,     0,     4,    17,     0,    23,     0,
-      16,    14,    21,    20
+       0,    21,    24,     0,     0,     4,    17,    23,     0,    16,
+      14,    20
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -7,    -7,    -6,    -7,    25,    -7,    -7
+      -7,    -7,    -6,    -7,    37,    -7,    -7
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -614,22 +614,20 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      17,    29,    38,    20,    40,    22,    31,    23,    32,    25,
-      15,    18,    41,    11,    39,    30,    26,    19,    27,    12,
-      34,    35,    24,    13,    36,     1,     2,     3,     4,    19,
-      28,    42,     5,    43,    21,     6,    16,     1,     2,     3,
-       4,    -6,    -6,    37,     5,     0,     0,     6,     0,    -6,
-      -6
+      17,    29,    37,    20,    39,    22,    31,    23,    32,    25,
+      15,    18,    40,    11,    38,    30,    26,    19,    24,    12,
+      34,    35,    27,    13,    36,     0,     1,     2,     3,     4,
+      19,    28,    41,     5,    -6,    -6,     6,    16,     1,     2,
+       3,     4,    -6,    -6,     0,     5,    21,     0,     6
 };
 
 static const yytype_int8 yycheck[] =
 {
        6,     1,     3,     9,     1,     1,     1,     3,     3,     1,
-       3,     0,     9,     1,    15,    15,     8,    14,    12,     7,
-      26,    27,     3,    11,    30,     3,     4,     5,     6,    14,
-      14,    37,    10,    39,     9,    13,    14,     3,     4,     5,
-       6,     0,     1,    15,    10,    -1,    -1,    13,    -1,     8,
-       9
+       3,     0,     9,     1,    15,    15,     8,    14,     3,     7,
+      26,    27,    12,    11,    30,    -1,     3,     4,     5,     6,
+      14,    14,    38,    10,     0,     1,    13,    14,     3,     4,
+       5,     6,     8,     9,    -1,    10,     9,    -1,    13
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -639,8 +637,8 @@ static const yytype_int8 yystos[] =
        0,     3,     4,     5,     6,    10,    13,    17,    18,    19,
       20,     1,     7,    11,    21,     3,    14,    18,     0,    14,
       18,    20,     1,     3,     3,     1,     8,    12,    14,     1,
-      15,     1,     3,    22,    18,    18,    18,    15,     3,    15,
-       1,     9,    18,    18
+      15,     1,     3,    22,    18,    18,    18,     3,    15,     1,
+       9,    18
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -656,7 +654,7 @@ static const yytype_int8 yyr2[] =
 {
        0,     2,     1,     1,     4,     1,     2,     1,     1,     1,
        3,     2,     2,     2,     5,     3,     5,     4,     2,     3,
-       5,     5,     1,     2,     1
+       5,     3,     1,     2,     1
 };
 
 
@@ -1358,7 +1356,7 @@ yyreduce:
   sprintf(result, "{\"tag\":\"START\",\"exp\":%s}", (yyvsp[0].res));
   free((yyvsp[0].res));
 }
-#line 1362 "y.tab.c"
+#line 1360 "y.tab.c"
     break;
 
   case 3:
@@ -1370,7 +1368,7 @@ yyreduce:
   free((yyvsp[0].res));
   (yyval.res) = buf;
 }
-#line 1374 "y.tab.c"
+#line 1372 "y.tab.c"
     break;
 
   case 4:
@@ -1383,7 +1381,7 @@ yyreduce:
   free((yyvsp[0].res));
   (yyval.res) = buf;
 }
-#line 1387 "y.tab.c"
+#line 1385 "y.tab.c"
     break;
 
   case 5:
@@ -1395,7 +1393,7 @@ yyreduce:
   free((yyvsp[0].res));
   (yyval.res) = buf;
 }
-#line 1399 "y.tab.c"
+#line 1397 "y.tab.c"
     break;
 
   case 6:
@@ -1408,7 +1406,7 @@ yyreduce:
   free((yyvsp[0].res));
   (yyval.res) = buf;
 }
-#line 1412 "y.tab.c"
+#line 1410 "y.tab.c"
     break;
 
   case 7:
@@ -1420,7 +1418,7 @@ yyreduce:
   free((yyvsp[0].id_value));
   (yyval.res) = buf;
 }
-#line 1424 "y.tab.c"
+#line 1422 "y.tab.c"
     break;
 
   case 8:
@@ -1432,7 +1430,7 @@ yyreduce:
   free((yyvsp[0].id_value));
   (yyval.res) = buf;
 }
-#line 1436 "y.tab.c"
+#line 1434 "y.tab.c"
     break;
 
   case 9:
@@ -1443,7 +1441,7 @@ yyreduce:
   sprintf(buf, "{\"tag\":\"ATEXP2\",\"num\":%d}", (yyvsp[0].int_value));
   (yyval.res) = buf;
 }
-#line 1447 "y.tab.c"
+#line 1445 "y.tab.c"
     break;
 
   case 10:
@@ -1455,7 +1453,7 @@ yyreduce:
   free((yyvsp[-1].res));
   (yyval.res) = buf;
 }
-#line 1459 "y.tab.c"
+#line 1457 "y.tab.c"
     break;
 
   case 11:
@@ -1467,7 +1465,7 @@ yyreduce:
   free((yyvsp[-1].res));
   (yyval.res) = buf;
 }
-#line 1471 "y.tab.c"
+#line 1469 "y.tab.c"
     break;
 
   case 12:
@@ -1479,7 +1477,7 @@ yyreduce:
   free((yyvsp[0].res));
   (yyval.res) = buf;
 }
-#line 1483 "y.tab.c"
+#line 1481 "y.tab.c"
     break;
 
   case 13:
@@ -1490,7 +1488,7 @@ yyreduce:
   sprintf(buf, "{\"tag\":\"ATEXP6\"}");
   (yyval.res) = buf;
 }
-#line 1494 "y.tab.c"
+#line 1492 "y.tab.c"
     break;
 
   case 14:
@@ -1503,7 +1501,7 @@ yyreduce:
   free((yyvsp[-1].res));
   (yyval.res) = buf;
 }
-#line 1507 "y.tab.c"
+#line 1505 "y.tab.c"
     break;
 
   case 15:
@@ -1515,7 +1513,7 @@ yyreduce:
   free((yyvsp[-1].res));
   (yyval.res) = buf;
 }
-#line 1519 "y.tab.c"
+#line 1517 "y.tab.c"
     break;
 
   case 16:
@@ -1529,7 +1527,7 @@ yyreduce:
   (yyval.res) = buf;
   yyerrok;
 }
-#line 1533 "y.tab.c"
+#line 1531 "y.tab.c"
     break;
 
   case 17:
@@ -1542,7 +1540,7 @@ yyreduce:
   free((yyvsp[0].res));
   (yyval.res) = buf;
 }
-#line 1546 "y.tab.c"
+#line 1544 "y.tab.c"
     break;
 
   case 18:
@@ -1553,7 +1551,7 @@ yyreduce:
   sprintf(buf, "{\"tag\":\"DEC2\",\"error\":\"NULL\"}");
   (yyval.res) = buf;
 }
-#line 1557 "y.tab.c"
+#line 1555 "y.tab.c"
     break;
 
   case 19:
@@ -1565,7 +1563,7 @@ yyreduce:
   free((yyvsp[-1].id_value));
   (yyval.res) = buf;
 }
-#line 1569 "y.tab.c"
+#line 1567 "y.tab.c"
     break;
 
   case 20:
@@ -1579,35 +1577,34 @@ yyreduce:
   free((yyvsp[0].res));
   (yyval.res) = buf;
 }
-#line 1583 "y.tab.c"
+#line 1581 "y.tab.c"
     break;
 
   case 21:
 #line 197 "sml.y"
 {
   char *buf;
-  buf = malloc(sizeof(char) * (strlen((yyvsp[-3].id_value))+strlen((yyvsp[0].res))+100));
-  sprintf(buf, "{\"tag\":\"DEC5\",\"id\":\"%s\",\"exp\":%s}", (yyvsp[-3].id_value), (yyvsp[0].res));
-  free((yyvsp[-3].id_value));
-  free((yyvsp[0].res));
+  buf = malloc(sizeof(char) * (strlen((yyvsp[-1].id_value))+100));
+  sprintf(buf, "{\"tag\":\"DEC5\",\"id\":\"%s\"}", (yyvsp[-1].id_value));
+  free((yyvsp[-1].id_value));
   (yyval.res) = buf;
 }
-#line 1596 "y.tab.c"
+#line 1593 "y.tab.c"
     break;
 
   case 22:
-#line 206 "sml.y"
+#line 205 "sml.y"
 {
   char *buf;
   buf = malloc(sizeof(char) * 100);
   sprintf(buf, "{\"tag\":\"DEC6\"}");
   (yyval.res) = buf;
 }
-#line 1607 "y.tab.c"
+#line 1604 "y.tab.c"
     break;
 
   case 23:
-#line 215 "sml.y"
+#line 214 "sml.y"
 {
   char *buf;
   buf = malloc(sizeof(char) * (strlen((yyvsp[-1].res))+strlen((yyvsp[0].id_value))+100));
@@ -1616,11 +1613,11 @@ yyreduce:
   free((yyvsp[0].id_value));
   (yyval.res) = buf;
 }
-#line 1620 "y.tab.c"
+#line 1617 "y.tab.c"
     break;
 
   case 24:
-#line 224 "sml.y"
+#line 223 "sml.y"
 {
   char *buf;
   buf = malloc(sizeof(char) * (strlen((yyvsp[0].id_value))+100));
@@ -1628,11 +1625,11 @@ yyreduce:
   free((yyvsp[0].id_value));
   (yyval.res) = buf;
 }
-#line 1632 "y.tab.c"
+#line 1629 "y.tab.c"
     break;
 
 
-#line 1636 "y.tab.c"
+#line 1633 "y.tab.c"
 
       default: break;
     }
@@ -1864,7 +1861,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 232 "sml.y"
+#line 231 "sml.y"
 
 
 int yyerror(char *msg) {

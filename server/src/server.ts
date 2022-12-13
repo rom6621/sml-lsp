@@ -107,26 +107,122 @@ documents.onDidChangeContent(async change => {
 			const parseTree = JSON.parse(stdout);
 			console.log(JSON.stringify(parseTree, null, 2));
 
+			// スコープを考慮した補完候補の取得
+			const searchScopeToken: any = (tree: any, tokens: string[]) => {
+				switch (tree.tag) {
+					case "START":
+						return searchScopeToken(tree["exp"], []);
+					case "EXP1":
+						return searchScopeToken(tree["appexp"], tokens);
+					case "EXP2":
+						return searchScopeToken(tree["exp"], tokens);
+					case "APPEXP1":
+						return searchScopeToken(tree["atexp"], tokens);
+					case "APPEXP2":
+						{
+							const [token1, flag] = searchScopeToken(tree["appexp"], tokens);
+							// APPEXPにIDCURSORが存在したとき
+							if (!flag) {
+								return [token1, flag];
+							} else {
+								const [token2, flag] = searchScopeToken(tree["atexp"], token1);
+								// ATEXPにIDCURSORが存在したとき
+								if (!flag) {
+									return [token2, flag];
+								} else {
+									return [token1, flag];
+								}
+							}	
+						}
+					case "ATEXP1_2":
+						return [tokens, false];
+					case "ATEXP3":
+						return searchScopeToken(tree["exp"], tokens);
+					case "ATEXP4":
+						return searchScopeToken(tree["exp"], tokens);
+					case "ATEXP5":
+						return searchScopeToken(tree["exp"], tokens);
+					case "ATEXP6":
+						return [[], true];
+					case "ATEXP7":
+						{
+							const [token1, flag] = searchScopeToken(tree["dec"], tokens);
+							// DECにIDCURSORが存在したとき
+							if (!flag) {
+								return [token1, flag];
+							} else {
+								const [token2, flag] = searchScopeToken(tree["exp"], token1);
+								// DECCにIDCURSORが存在したとき
+								if (!flag) {
+									return [token2, flag];
+								} else {
+									return [token1, flag];
+								}
+							}	
+						}
+					case "ATEXP8":
+						return searchScopeToken(tree["dec"], tokens);
+					case "ATEXP9":
+						{
+							const [token1, flag] = searchScopeToken(tree["dec"], tokens);
+							// DECにIDCURSORが存在したとき
+							if (!flag) {
+								return [token1, flag];
+							} else {
+								const [token2, flag] = searchScopeToken(tree["exp"], token1);
+								// DECCにIDCURSORが存在したとき
+								if (!flag) {
+									return [token2, flag];
+								} else {
+									return [token1, flag];
+								}
+							}	
+						}
+					case "DEC1":
+						{
+							const [token1, flag] = searchScopeToken(tree["exp"], tokens);
+							if (!flag) return [token1, flag];
+							else {
+								token1.push(tree["id"]);
+								return [token1, flag];
+							}
+						}
+					case "DEC3":
+						{
+							tokens.push(tree["id"]);
+							return [tokens, true];
+						}
+					case "DEC4":
+						{
+							const [token1, flag] = searchScopeToken(tree["exp"], tokens);
+							if (!flag) return [token1, flag];
+							else {
+								token1.push(tree["id"]);
+								return [token1, flag];
+							}
+						}
+					case "DEC5":
+						{
+							tokens.push(tree["id"]);
+							return [tokens, true];
+						}
+					default:
+						return [tokens, true];
+				}
+			}
 
-			// 構文木から変数のみを取り出す関数
-			const searchIds = (tree: any) => {
-				const keys = Object.keys(tree);
-				keys.forEach((key) => {
-					const value = tree[key];
-					if (typeof value === 'object') {
-						searchIds(value);
-					} else if (key === 'id' && candidates.findIndex(e => e.data === value) === -1) {
-						candidates.push({
-							label: value,
-							kind: CompletionItemKind.Variable,
-							data: value
-						});
-					}
+			const result = searchScopeToken(parseTree, [])[0];
+
+			result
+				.forEach((e: string) => {
+					candidates.push({
+						label: e,
+						kind: CompletionItemKind.Variable,
+					})
 				});
-			};
-			searchIds(parseTree);
-			console.log(completionItems)
+			
 		} catch (e) {
+			console.log(e);
 			console.log('構文解析に失敗しました');
 			return -1;
 		} finally {

@@ -193,13 +193,12 @@ dec
   free($5);
   $$ = buf;
 }
-| FUN ID error '=' exp
+| FUN ID error
 {
   char *buf;
-  buf = malloc(sizeof(char) * (strlen($2)+strlen($5)+100));
-  sprintf(buf, "{\"tag\":\"DEC5\",\"id\":\"%s\",\"exp\":%s}", $2, $5);
+  buf = malloc(sizeof(char) * (strlen($2)+100));
+  sprintf(buf, "{\"tag\":\"DEC5\",\"id\":\"%s\"}", $2);
   free($2);
-  free($5);
   $$ = buf;
 }
 | error
