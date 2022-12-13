@@ -1,6 +1,5 @@
 # SML-LSP
-
-## Standard MLのLanguage Server
+Standard MLのLanguage Server
 
 ## インストール・実行方法
 1. リポジトリをクローン
