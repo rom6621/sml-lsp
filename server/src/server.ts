@@ -1,17 +1,18 @@
 import {
 	createConnection,
 	TextDocuments,
-	Diagnostic,
-	DiagnosticSeverity,
 	ProposedFeatures,
 	InitializeParams,
 	DidChangeConfigurationNotification,
 	CompletionItem,
 	CompletionItemKind,
-	TextDocumentPositionParams,
 	TextDocumentSyncKind,
-	InitializeResult
+	InitializeResult,
+	CompletionParams
 } from 'vscode-languageserver/node';
+import {
+	diffChars
+} from "diff";
 
 import {
 	TextDocument
@@ -21,7 +22,7 @@ import {
 	exec
 } from 'child_process';
 import {
-	join
+	join,
 } from 'path';
 
 // コネクションを作成
@@ -29,9 +30,7 @@ const connection = createConnection(ProposedFeatures.all);
 // ドキュメントマネージャーを作成
 const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
 
-// ドキュメントの内容
-let position = -1;
-
+// 各種設定
 let hasConfigurationCapability = false;
 let hasWorkspaceFolderCapability = false;
 let hasDiagnosticRelatedInformationCapability = false;
@@ -39,8 +38,6 @@ let hasDiagnosticRelatedInformationCapability = false;
 connection.onInitialize((params: InitializeParams) => {
 	const capabilities = params.capabilities;
 
-	// Does the client support the `workspace/configuration` request?
-	// If not, we fall back using global settings.
 	hasConfigurationCapability = !!(
 		capabilities.workspace && !!capabilities.workspace.configuration
 	);
@@ -56,7 +53,6 @@ connection.onInitialize((params: InitializeParams) => {
 	const result: InitializeResult = {
 		capabilities: {
 			textDocumentSync: TextDocumentSyncKind.Incremental,
-			// Tell the client that this server supports code completion.
 			completionProvider: {
 				resolveProvider: true
 			}
@@ -72,6 +68,7 @@ connection.onInitialize((params: InitializeParams) => {
 	return result;
 });
 
+// 初期化時の実行内容
 connection.onInitialized(() => {
 	if (hasConfigurationCapability) {
 		// Register for all configuration changes.
@@ -84,49 +81,34 @@ connection.onInitialized(() => {
 	}
 });
 
-// The example settings
-interface ExampleSettings {
-	maxNumberOfProblems: number;
-}
+/* 以下実装内容 */
 
-// The global settings, used when the `workspace/configuration` request is not supported by the client.
-// Please note that this is not the case when using this server with the client provided in this example
-// but could happen with other clients.
-const defaultSettings: ExampleSettings = { maxNumberOfProblems: 1000 };
-let globalSettings: ExampleSettings = defaultSettings;
+// カーソル位置(offset)
+let position = -1;
+// 変更前のテキスト
+let preContents = "";
 
-// Cache the settings of all open documents
-const documentSettings: Map<string, Thenable<ExampleSettings>> = new Map();
-
-connection.onDidChangeConfiguration(change => {
-	if (hasConfigurationCapability) {
-		// Reset all cached document settings
-		documentSettings.clear();
-	} else {
-		globalSettings = <ExampleSettings>(
-			(change.settings.languageServerExample || defaultSettings)
-		);
-	}
-});
-
-// Only keep settings for open documents
-documents.onDidClose(e => {
-	documentSettings.delete(e.document.uri);
-});
-
+// 補完候補を格納する配列
 let completionItems: CompletionItem[];
 
+// ドキュメントの変更が行われた際に実行
 documents.onDidChangeContent(async change => {
-	getAllIds(change.document);
-});
+	const results = diffChars(preContents, change.document.getText());
+	if (results[0].count) {
+		position = results[0].count + 1;
+	}
+	preContents = change.document.getText();
 
-// すべての変数名を取得し、予測候補に格納
-const getAllIds = async (textDocument: TextDocument): Promise<void> => {
-	const command = `${join(__dirname, 'parse')} ${textDocument.uri.slice(7)} ${position}`;
-	const execBuf = exec(command, (err, stdout, stderr) => {
+	completionItems = [];
+	const execBuf = exec(`${join(__dirname, 'parse')} ${position}`, (err, stdout, stderr) => {
 		const candidates: CompletionItem[] = [];
 		try {
+			// 実行結果から構文木を取得，JSON化
 			const parseTree = JSON.parse(stdout);
+			console.log(JSON.stringify(parseTree, null, 2));
+
+
+			// 構文木から変数のみを取り出す関数
 			const searchIds = (tree: any) => {
 				const keys = Object.keys(tree);
 				keys.forEach((key) => {
@@ -143,29 +125,27 @@ const getAllIds = async (textDocument: TextDocument): Promise<void> => {
 				});
 			};
 			searchIds(parseTree);
-			console.log(completionItems);
+			console.log(completionItems)
+		} catch (e) {
+			console.log('構文解析に失敗しました');
+			return -1;
+		} finally {
 			candidates.push(
 				{ label: 'let', kind: CompletionItemKind.Keyword, data: 'let' },
 				{ label: 'val', kind: CompletionItemKind.Keyword, data: 'val' },
 				{ label: 'in', kind: CompletionItemKind.Keyword, data: 'in' },
 				{ label: 'end', kind: CompletionItemKind.Keyword, data: 'end' },
 			);
-		} catch (e) {
-			console.log('構文解析に失敗しました');
-			return -1;
-		} finally {
 			completionItems = candidates;
 		}
 	});
-	execBuf.stdin?.write(textDocument.getText());
+	execBuf.stdin?.write(change.document.getText());
 	execBuf.stdin?.end();
-};
+});
 
+// 補完される際に実行
 connection.onCompletion(
-	(_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
-
-		position = _textDocumentPosition.position.character;
-
+	(params: CompletionParams): CompletionItem[] =>  {
 		// 補完候補があれば返す
 		if (completionItems && completionItems.length > 0) {
 			return completionItems;
@@ -174,8 +154,6 @@ connection.onCompletion(
 	}
 );
 
-// This handler resolves additional information for the item selected in
-// the completion list.
 connection.onCompletionResolve(
 	(item: CompletionItem): CompletionItem => {
 		if (item.data === 1) {

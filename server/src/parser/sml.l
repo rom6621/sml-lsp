@@ -50,6 +50,14 @@
   return (FN);
 }
 
+"fun" {
+  num_chars += yyleng;
+  if (DEBUG) {
+    printf("FUN ");
+  }
+  return (FUN);
+}
+
 "=>" {
   num_chars += yyleng;
   if (DEBUG) {
@@ -92,15 +100,15 @@
 [a-zA-Z][a-zA-Z0-9]* {
   num_chars += yyleng;
   yylval.id_value = malloc(strlen(yytext) + 1);
-  strcpy(yylval.id_value, yytext);
-  if (position != -1 && num_chars == position-1) {
+  sprintf(yylval.id_value, "%s", yytext);
+  if (position != -1 && num_chars == position) {
     if (DEBUG) {
       printf("IDCURSOR(%s) ", yytext);
     }
     return (IDCURSOR);
   } else {
     if (DEBUG) {
-      printf("ID(%s) ", yytext);
+      printf("ID(%d) ", yytext);
     }
     return (ID);
   }

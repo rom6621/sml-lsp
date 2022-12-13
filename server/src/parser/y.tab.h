@@ -57,7 +57,8 @@ extern int yydebug;
     IN = 263,
     END = 264,
     FN = 265,
-    RA = 266
+    FUN = 266,
+    RA = 267
   };
 #endif
 /* Tokens.  */
@@ -69,7 +70,8 @@ extern int yydebug;
 #define IN 263
 #define END 264
 #define FN 265
-#define RA 266
+#define FUN 266
+#define RA 267
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -85,7 +87,7 @@ union YYSTYPE
   struct atexp *atexp;
   struct dec *dec;
 
-#line 89 "y.tab.h"
+#line 91 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
