@@ -212,6 +212,7 @@ documents.onDidChangeContent(async change => {
 			}
 
 			const result = searchScopeToken(parseTree, [])[0];
+			console.log(result);
 
 			result
 				.forEach((e: string) => {

@@ -193,7 +193,7 @@ dec
   free($5);
   $$ = buf;
 }
-| FUN ID error
+| FUN ID error '=' exp
 {
   char *buf;
   buf = malloc(sizeof(char) * (strlen($2)+100));
