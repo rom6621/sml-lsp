@@ -25,7 +25,7 @@ import {
 	join,
 } from 'path';
 
-// コネクションを作成
+// コネクションを作成	
 const connection = createConnection(ProposedFeatures.all);
 // ドキュメントマネージャーを作成
 const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
