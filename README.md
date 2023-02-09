@@ -1,7 +1,13 @@
 # SML-LSP
 Standard MLのLanguage Server
 
+## 必要ソフトウェア
+
 ## インストール・実行方法
+0. 各種インストール（インストール済みであれば省略可）
+```console
+$ sudo apt install build-essential git nodejs bison flex
+```
 1. リポジトリをクローン
 ```console
 $ git clone git@github.com:rom6621/sml-lsp.git
