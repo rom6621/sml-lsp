@@ -17,16 +17,16 @@ Standard MLのLanguage Server
 
 ## インストール・実行方法
 1. 各種インストール（インストール済みであれば省略可）
-```console
+```bash
 sudo apt update
 sudo apt install -y build-essential git nodejs bison flex
 ```
 2. リポジトリをクローン
-```console
+```bash
 git clone https://github.com/rom6621/sml-lsp.git
 ```
 3. makeコマンドでビルドを行う
-```console
+```bash
 make
 ```
 4. VS Codeでダウンロードしたディレクトリを開く
