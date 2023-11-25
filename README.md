@@ -25,11 +25,18 @@ sudo apt install -y build-essential git nodejs bison flex
 ```bash
 git clone https://github.com/rom6621/sml-lsp.git
 ```
+3. ディレクトリ移動
+```bash
+cd sml-lsp
+```
 3. makeコマンドでビルドを行う
 ```bash
 make
 ```
 4. VS Codeでダウンロードしたディレクトリを開く
+```bash
+code .
+```
 5. F5キーを押してデバッグモードを実行
 6. 拡張子が`.sml`の適当なファイルを開く
 
