@@ -8,8 +8,12 @@ Standard MLのLanguage Server
 [WSLのインストール](https://learn.microsoft.com/ja-jp/windows/wsl/install)が必要です。
 
 併せてVSCodeの[WSL拡張機能のインストール](https://learn.microsoft.com/ja-jp/windows/wsl/tutorials/wsl-vscode)も行ってください。
-### Linuxの場合
 
+### Linuxの場合
+そのまま実行してください
+
+### macの場合
+未検証
 
 ## インストール・実行方法
 1. 各種インストール（インストール済みであれば省略可）
@@ -21,19 +25,13 @@ sudo apt install -y build-essential git nodejs bison flex
 ```console
 git clone https://github.com/rom6621/sml-lsp.git
 ```
-3. ダウンロードしたディレクトリに移動し、ビルドを行う
+3. makeコマンドでビルドを行う
 ```console
-cd sml-lsp/server/src/parser
 make
 ```
-4. 依存関係のインストールを行う
-```console
-cd sml-lsp
-npm i
-```
-5. VS Codeでダウンロードしたディレクトリを開く
-6. F5キーを押してデバッグモードを実行
-7. 拡張子が`.sml`の適当なファイルを開く
+4. VS Codeでダウンロードしたディレクトリを開く
+5. F5キーを押してデバッグモードを実行
+6. 拡張子が`.sml`の適当なファイルを開く
 
 ### 構文解析結果の確認方法
 1. VS Code ツールバーの「ターミナル」→「新しいターミナル」によりターミナルを開く
