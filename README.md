@@ -1,8 +1,6 @@
 # SML-LSP
 Standard MLのLanguage Server
 
-## 必要ソフトウェア
-
 ## 環境構築
 ### Windowsの場合
 [WSLのインストール](https://learn.microsoft.com/ja-jp/windows/wsl/install)が必要です。
